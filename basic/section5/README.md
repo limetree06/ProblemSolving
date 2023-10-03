@@ -8,6 +8,12 @@
 
 3. postorder Traversal : 왼쪽 자식 노드를 탐색하고, 오른쪽 자식 노드를 탐색하고, 루트 노드를 탐색하는 방식이다.
 
-4. Levelorder Traversal 또는 BFS(넢이 우선 탐색)
+4. Levelorder Traversal 또는 BFS(넢이 우선 탐색) -> 자료구조 Q!
+
+```
+    1                   이게 Q에 들어가면 q에 1들어가고 1방문 시 2,3 push
+  2   3                 2 방문시 2 out하고 밑에 4, 5 in
+4  5  6  7              3 방문시 3 out하고 밑에 6, 7 in
+```
 
 4번빼고는 모두 DFS(깊이 우선 탐색)으로 분류된다.
