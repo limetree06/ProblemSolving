@@ -1,6 +1,6 @@
 /basic/test
 *.pdf
-*.DS_Store
+.DS_Store
 /.vscode
 
 *.txt
