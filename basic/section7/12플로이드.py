@@ -39,16 +39,37 @@ def func():
     print()
 
 
-for i in range(1, 2):
-    sys.stdin = open(f"test/in{i}.txt", "rt")
+for pro_num in range(1, 6):
+    sys.stdin = open(f"test/in{pro_num}.txt", "rt")
     N, M = list(map(int, input().split()))  # N은 도시의 수, M은 도로의 수
-    board = [[0 for _ in range(N + 1)] for _ in range(N + 1)]
     MAX = 99
+    board = [[MAX for _ in range(N)] for _ in range(N)]
     for _ in range(M):
         s, e, price = map(int, input().split())
-        board[s][e] = price
+        board[s - 1][e - 1] = price
 
-    for start in range(1, N + 1):
-        for end in range(1, N + 1):
-            if start != end and board[s][e] == 0:
-                board[s][e] = MAX
+    for s in range(N):
+        board[s][s] = 0
+
+    for K in range(N):
+        for start in range(N):
+            for end in range(N):
+                board[start][end] = min(
+                    board[start][end], board[start][K] + board[K][end]
+                )
+    for i in range(N):
+        for j in range(N):
+            if board[i][j] == MAX:
+                board[i][j] = "M"
+            else:
+                board[i][j] = str(board[i][j])
+
+    answer = []
+    sys.stdin = open(f"test/out{pro_num}.txt", "rt")
+    for _ in range(N):
+        answer.append(list(map(str, input().split())))
+
+    for i in range(N):
+        if answer[i] != board[i]:
+            print(i, False)
+            break
