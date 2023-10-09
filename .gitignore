@@ -1,0 +1,7 @@
+/basic/test
+/basic/venv
+*.pdf
+.DS_Store
+/.vscode
+
+*.txt
