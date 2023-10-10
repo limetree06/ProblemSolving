@@ -1,5 +1,5 @@
-/basic/test
-/basic/venv
+/basic/test/
+/basic/venv/
 *.pdf
 .DS_Store
 /.vscode
