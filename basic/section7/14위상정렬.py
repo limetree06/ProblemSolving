@@ -1,6 +1,6 @@
 import sys
 
-''' 
+""" 
 위상정렬(그래프 정렬)
 위상정렬은 어떤 일을 하는 순서를 찾는 알고리즘입니다.
 각각의 일의 선후관계가 복잡하게 얽혀있을 때 각각 일의 선후관계를 유지하면서 전체 일의 순서를 짜는 알고리즘입니다.
@@ -30,9 +30,11 @@ import sys
 ▣ 출력예제
 1 6 2 5 4 3
 
-'''
+"""
 
-sys.stdin = open(f"/Users/minjison/Desktop/취업준비/ProblemSolving/basic/test/in1.txt", "rt")
+sys.stdin = open(
+    f"/Users/minjison/Desktop/취업준비/ProblemSolving/basic/test/in1.txt", "rt"
+)
 N, M = map(int, input().split())
 board = [[N for _ in range(N)] for _ in range(N)]
 for a in range(N):
@@ -40,7 +42,7 @@ for a in range(N):
 
 for _ in range(M):
     s, e = map(int, input().split())
-    board[s-1][e-1] = 1
+    board[s - 1][e - 1] = 1
 
 for k in range(N):
     for start in range(N):

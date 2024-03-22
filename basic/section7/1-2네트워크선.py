@@ -13,27 +13,24 @@ import sys
 
 
 def top_up(x):
-    if dy[x] > 0:
-        return dy[x]
-
     if x == 1 or x == 2:
         return x
     else:
-        dy[x] = top_up(x - 1) + top_up(x - 2)
-        return dy[x]
+        return top_up(x - 1) + top_up(x - 2)
 
 
 def bottom_up(N):
-    for i in range(3, N + 1):
-        dy[i] = dy[i - 1] + dy[i - 2]
-    return dy[N]
+    dp = [0] * (N + 1)
+    for i in range(1, N + 1):
+        if i == 1 or i == 2:
+            dp[i] = i
+        else:
+            dp[i] = dp[i - 1] + dp[i - 2]
+    return dp[N]
 
 
 for i in range(1, 6):
     sys.stdin = open(f"test/in{i}.txt", "rt")
     N = int(input())
-    dy = [0] * (N + 1)
-    dy[1] = 1
-    dy[2] = 2
-    # print(bottom_up(N))
+    print(bottom_up(N))
     print(top_up(N))

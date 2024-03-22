@@ -36,62 +36,36 @@ N*N의 계곡의 돌다리 격자정보가 주어지면 (1, 1)격자에서 (N, N
 
 
 def bottom_up():
-    energy = [[0 for _ in range(N)] for _ in range(N)]
-
-    def get_energy(x, y):
-        if x == 0 and y == 0:
-            energy[0][0] = board[0][0]
-        elif x == 0:
-            energy[y][0] = energy[y - 1][0] + board[y][0]
-        elif y == 0:
-            energy[0][x] = energy[0][x - 1] + board[0][x]
-
-        else:  # 비교필요
-            # if energy[y - 1][x] < energy[y][x - 1]:
-            #     energy[y][x] = board[y][x] + energy[y - 1][x]
-            # else:
-            #     energy[y][x] = board[y][x] + energy[y][x - 1]
-            energy[y][x] = min(energy[y - 1][x], energy[y][x - 1]) + board[y][x]
-
-    for i in range(N):
-        for y in range(i + 1):
-            x = i - y
-            get_energy(x, y)
-
-    for i in range(N):
-        for j in range(1, N - i):
-            x = N - j
-            y = i + j
-            get_energy(x, y)
-    return energy[N - 1][N - 1]
+    return
 
 
 def top_down(x, y):
-    if energy[x][y] != 0:
-        return energy[x][y]
-    if x == 0 and y == 0:
-        energy[0][0] = board[0][0]
-        return energy[0][0]
-    else:  # 값이 없을 때
-        if x == 0:
-            energy[x][y] = top_down(x, y - 1) + board[x][y]
-        elif y == 0:
-            energy[x][y] = top_down(x - 1, y) + board[x][y]
-        else:
-            energy[x][y] = min(top_down(x, y - 1), top_down(x - 1, y)) + board[x][y]
-        return energy[x][y]
+    return
 
+
+from collections import deque
 
 for i in range(1, 6):
     sys.stdin = open(f"test/in{i}.txt", "rt")
     N = int(input())
-    board = []
-    MAX = 0
+    table = []
+    INF = 10e9
     for _ in range(N):
-        a = list(map(int, input().split()))
-        board.append(a)
-        MAX += sum(a)
-    energy = [[0 for _ in range(N)] for _ in range(N)]
+        table.append(list(map(int, input().split())))
 
-    print(bottom_up())
-    print(top_down(N - 1, N - 1))
+    answer = [[INF] * N for _ in range(N)]
+    answer[0][0] = table[0][0]
+    Q = deque()
+    Q.append((0, 0))
+    dx = [0, 1]
+    dy = [1, 0]
+    while Q:
+        x, y = Q.popleft()
+        for i in range(2):
+            xx, yy = x + dx[i], y + dy[i]
+            if 0 <= xx < N and 0 <= yy < N:
+                if answer[x][y] + table[xx][yy] < answer[xx][yy]:
+                    answer[xx][yy] = answer[x][y] + table[xx][yy]
+                    Q.append((xx, yy))
+
+    print(answer[N - 1][N - 1])

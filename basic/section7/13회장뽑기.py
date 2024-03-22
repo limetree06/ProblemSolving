@@ -39,17 +39,19 @@ def func():
 
 
 for i in range(1, 6):
-    print(f'============={i}==================')
-    sys.stdin = open(f"/Users/minjison/Desktop/취업준비/ProblemSolving/basic/test/in{i}.txt", "rt")
+    print(f"============={i}==================")
+    sys.stdin = open(
+        f"/Users/minjison/Desktop/취업준비/ProblemSolving/basic/test/in{i}.txt", "rt"
+    )
     N = int(input())
     community = [[N for _ in range(N)] for _ in range(N)]
     while True:
         s, e = list(map(int, input().split()))
-        if s==-1 or e==-1:
+        if s == -1 or e == -1:
             break
         else:
-            community[s-1][e-1] = 1
-            community[e-1][s-1] = 1
+            community[s - 1][e - 1] = 1
+            community[e - 1][s - 1] = 1
 
     for a in range(N):
         community[a][a] = 0
@@ -57,13 +59,15 @@ for i in range(1, 6):
     for k in range(N):
         for start in range(N):
             for end in range(N):
-                community[start][end] = min(community[start][end], community[start][k] + community[k][end])
+                community[start][end] = min(
+                    community[start][end], community[start][k] + community[k][end]
+                )
 
     result = [max(community[i]) for i in range(N)]
     res = min(result)
     answer = []
     for index, value in enumerate(result):
         if value == res:
-            answer.append(index+1)
+            answer.append(index + 1)
     print(res, len(answer))
     print(answer)

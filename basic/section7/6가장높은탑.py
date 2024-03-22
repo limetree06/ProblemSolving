@@ -34,24 +34,20 @@ import sys
 for i in range(1, 6):
     sys.stdin = open(f"test/in{i}.txt", "rt")
     N = int(input())
-    blocks = []
-    height = [0] * N
+    dp = [0] * N
+    info = []
     for _ in range(N):
-        a = list(map(int, input().split()))
-        blocks.append(a)
-
-    blocks.sort(key=lambda x: [x[0], x[2], x[1]], reverse=True)
+        info.append(list(map(int, input().split())))
+    info.sort(key=lambda x: [x[0], x[2], x[1]], reverse=True)
 
     for i in range(N):
-        cur_block = blocks[i]
-        MAX = cur_block[1]
+        MAX = info[i][1]
         for j in range(i, -1, -1):
-            prev_block = blocks[j]
             if (
-                prev_block[0] > cur_block[0]
-                and prev_block[2] > cur_block[2]
-                and MAX < height[j] + cur_block[1]
+                info[i][0] < info[j][0]
+                and info[i][2] < info[j][2]
+                and dp[j] + info[i][1] > MAX
             ):
-                MAX = height[j] + cur_block[1]
-        height[i] = MAX
-    print(max(height))
+                MAX = dp[j] + info[i][1]
+        dp[i] = MAX
+    print(max(dp))

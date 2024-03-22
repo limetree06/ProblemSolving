@@ -30,29 +30,11 @@ import time
 """
 내 풀이
 1키로 ~ limit키로를 돌면서 각 무게의 최대 value를 구한다.
-
-
-
-
 시간 : 0.02
 """
 for i in range(5, 6):
     sys.stdin = open(f"test/in{i}.txt", "rt")
     N, limit = map(int, input().split())
-    values = [0] * (limit + 1)
-    for _ in range(N):
-        weight, value = map(int, input().split())
-        values[weight] = value
-
-    start = time.time()
-    for i in range(1, limit + 1):
-        MAX = values[i]
-        for j in range(1, i + 1 // 2):
-            if MAX < values[i - j] + values[j]:
-                MAX = values[i - j] + values[j]
-        values[i] = MAX
-    print(values[limit])
-    print(time.time() - start)
 
 
 """ 
@@ -63,18 +45,21 @@ for i in range(5, 6):
 20% 감소... 왜지?
 """
 
-for i in range(5, 6):
+for i in range(1, 6):
     sys.stdin = open(f"test/in{i}.txt", "rt")
     N, limit = map(int, input().split())
-    values = [0] * (limit + 1)
-    jews = []
+    bags = []
     for _ in range(N):
-        jews.append(list(map(int, input().split())))
-    start = time.time()
-    for i in jews:
-        for j in range(i[0], limit + 1):
-            v = i[1] + values[j - i[0]]
-            if values[j] < v:
-                values[j] = v
-    print(values[limit])
-    print(time.time() - start)
+        weight, value = map(int, input().split())
+        bags.append([weight, value])
+    bags.sort()
+    dp = [0] * (limit + 1)
+
+    for i in range(limit + 1):
+        for weight, value in bags:
+            if i - weight < 0:
+                continue
+            else:
+                dp[i] = max(dp[i], dp[i - weight] + value)
+
+    print(dp[limit])
